@@ -6,7 +6,7 @@ let counters = {
   
   // Variable to keep track of the last card flipped
   let lastCardFlipped = null;
-  
+  //hi
   // Create a new card element that is not yet attached to the DOM
   function createNewCard() {
     const cardElement = document.createElement("div");
