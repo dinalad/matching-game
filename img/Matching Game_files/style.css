@@ -1,6 +1,6 @@
 :root {
-  --card-width: 120px;
-  --card-height: 150px;
+  --card-width: 125px;
+  --card-height: 160px;
 }
 
 body {
@@ -11,31 +11,18 @@ body {
   color: rgb(196, 124, 135);
   font-family: "Playwrite PL", cursive;
   text-shadow: 2px 2px 3px rgb(251, 211, 217);
-  
-}
-
-p {
- position:fixed;
- left:0;
- bottom:0;
- width:100%;
- font-size:13px;
- background-color:white;
- text-align:center;
- margin-bottom:0px;
 }
 
 h1 {
-  font-size: 50px;
+  font-size: 35px;
   text-align: center;
-  margin-top: 5px;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
 }
 
 h2 {
-  font-size:35px;
+  font-size:30px;
   text-align: center;
-  margin: 30px 0;
+  margin: 20px 0;
 }
 
 #ui-container {
@@ -58,12 +45,7 @@ h2 {
   margin: 10px auto;
   width: calc((var(--card-width) + 2vw + 12px) * 6);
 }
-#card-container.easy {
-  width: calc((var(--card-width) + 2vw + 12px) * 4);
-}
-#card-container.hard {
-  width: calc((var(--card-width) + 2vw + 12px) * 8);
-}
+
 .card {
   display: inline-block;
   position: relative;
@@ -143,12 +125,6 @@ h2 {
 .image-10 .card-up {
   background-image: url(img/image-10.png), linear-gradient(#72dbf4, #72dbf4);
 }
-.image-11 .card-up {
-  background-image: url(img/image-11.png), linear-gradient(#72dbf4, #72dbf4);
-}
-.image-12 .card-up {
-  background-image: url(img/image-12.png), linear-gradient(#72dbf4, #72dbf4);
-}
 
 .glow {
   border: 1px solid transparent;
@@ -180,11 +156,13 @@ h2 {
   display: flex;
   justify-content: center;
 }
+.reset-btn{
 
+}
 
 .start-btn{
-  margin: 100px 5px 30px 5px;
-  padding: 40px 80px;
+  margin: 0 0 30px 0;
+  padding: 20px 40px;
   background-color: rgb(251, 211, 217);
   color: rgb(196, 124, 135);
   border: 0px;
@@ -198,27 +176,10 @@ h2 {
   background-color: rgb(196,197,117);
 }
 
-.startgame-btn{
-  margin: 100px 5px 30px 5px;
-  padding: 40px 80px;
-  background-color: rgb(251, 211, 217);
-  color: rgb(196, 124, 135);
-  border: 0px;
-  border-radius: 10px;
-  font-family: "Playwrite PL", cursive;
-  font-size: 2em;
-}
-
-.startgame-btn:hover{
-  cursor: pointer;
-  background-color: rgb(196,197,117);
-}
-
 .reset-btn {
   
-   display: block;
   margin: auto;
-  padding: 15px 35px;
+  padding: 20px 40px;
   background-color: rgb(251, 211, 217);
   color: rgb(196, 124, 135);
   border: 0px;

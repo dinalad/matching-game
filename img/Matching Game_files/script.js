@@ -27,7 +27,7 @@ function shuffleCardImageClasses() {
     "image-1", "image-1", "image-2", "image-2", "image-3", "image-3",
     "image-4", "image-4", "image-5", "image-5", "image-6", "image-6",
     "image-7", "image-7", "image-8", "image-8", "image-9", "image-9",
-    "image-10", "image-10", "image-11", "image-11", "image-12", "image-12"
+    "image-10", "image-10"
   ];
   return _.shuffle(cardClasses).slice(0, getCardCount());
 }
@@ -94,26 +94,17 @@ function resetGame() {
   document.getElementById("match-count").innerText = "0";
   counters = { flips: 0, matches: 0 };
   lastCardFlipped = null;
-  cardContainer.className = ''; // Reset the class of card-container
   showStartPage();
 }
 
 function showStartPage() {
-  document.getElementById("start-page").style.display = 'none';
+  document.getElementById("start-page").style.display = 'block';
   document.getElementById("game-container").style.display = 'none';
   document.getElementById("reset-container").style.display = 'none';
-  document.getElementById('initial-start-page').style.display = 'block';
-}
-
-function showLevelChoices() {
-  document.getElementById('initial-start-page').style.display = 'none';
-  document.getElementById('start-page').style.display = 'block';
 }
 
 function startGame(mode) {
   gameMode = mode;
-  const cardContainer = document.getElementById("card-container");
-  cardContainer.className = mode; // Add the mode class to the card container
   document.getElementById("start-page").style.display = 'none';
   document.getElementById("game-container").style.display = 'block';
   document.getElementById("reset-container").style.display = 'block';
