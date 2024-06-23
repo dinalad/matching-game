@@ -1,7 +1,7 @@
 
 :root {
     --card-width: 125px;
-    --card-height: 175px;
+    --card-height: 160px;
   }
   
   body {
@@ -12,22 +12,23 @@
     color: rgb(196, 124, 135);
     font-family: "Playwrite PL", cursive;
     text-shadow: 2px 2px 3px rgb(251, 211, 217);
-    min-height: 100vh;
   }
   
   h1 {
-    font-size: 60px;
+    font-size: 35px;
     text-align: center;
-  }
+    margin-bottom: 5px; 
+}
+  
   
   #ui-container {
     text-align: center;
   }
   
   #ui-container h3 {
-    margin: 0;
+    margin: 0px;
     display: inline-block;
-    font-size: 40px;
+    font-size: 20px;
     text-align: center;
   }
   
@@ -37,9 +38,11 @@
   
   #card-container {
     font-size: 0;
-    margin: 50px auto;
-    width: calc((var(--card-width) + 2vw + 12px) * 4);
+    margin: 10px auto;
+    width: calc((var(--card-width) + 2vw + 12px) * 6);
   }
+
+
   
   .card {
     display: inline-block;
@@ -109,6 +112,15 @@
   .image-6 .card-up {
     background-image: url(img/image-6.png), linear-gradient(#72dbf4, #72dbf4);
   }
+  .image-7 .card-up {
+    background-image: url(img/image-7.png), linear-gradient(#72dbf4, #72dbf4);
+  }
+  .image-8 .card-up {
+    background-image: url(img/image-8.png), linear-gradient(#72dbf4, #72dbf4);
+  }
+  .image-9 .card-up {
+    background-image: url(img/image-9.png), linear-gradient(#72dbf4, #72dbf4);
+  }
   
   .glow {
       border: 1px solid transparent;    
@@ -155,5 +167,5 @@
   
   .reset-btn:hover {
       cursor: pointer;
-      background-color: lightgrey;
+      background-color: rgb(196,197,117);
   }

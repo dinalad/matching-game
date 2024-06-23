@@ -1,36 +1,22 @@
-
 let clickAudio = new Audio('audio/click.wav');
 let matchAudio = new Audio('audio/match.wav');
-let winAudio = new Audio('audio/win.wav')
-
+let winAudio = new Audio('audio/win.wav');
 
 function flipCardWhenClicked(cardObject) {
-  
   cardObject.element.onclick = function() {
- 
-
     if (cardObject.element.classList.contains("flipped")) {
       return;
     }
-
-    
     clickAudio.play();
-
-   
     cardObject.element.classList.add("flipped");
-
-    
     setTimeout(function() {
-     
       onCardFlipped(cardObject);
     }, 500);
   };
 }
 
 function setUpGame() {
-  let cardObjects =
-    createCards(document.getElementById("card-container"), shuffleCardImageClasses());
-
+  let cardObjects = createCards(document.getElementById("card-container"), shuffleCardImageClasses());
   if (cardObjects != null) {
     for (let i = 0; i < cardObjects.length; i++) {
       flipCardWhenClicked(cardObjects[i]);
@@ -38,42 +24,29 @@ function setUpGame() {
   }
 }
 
-
 function createNewCardTest() {
   const TEST_NAME = "createNewCardTest";
+  let variableAndCreateElementPresentSpec = functionSpec(createNewCard)
+    .contains("let")
+    .or("var")
+    .or("const")
+    .andThen("createElement");
+  let passedStep1Heuristics = checkFunctionSpec(variableAndCreateElementPresentSpec);
 
-  // Check step 1 heuristics.
-  let variableAndCreateElementPresentSpec =
-    functionSpec(createNewCard)
-      .contains("let")
-      .or("var")
-      .or("const")
-      .andThen("createElement");
-  let passedStep1Heuristics =
-    checkFunctionSpec(variableAndCreateElementPresentSpec);
-
-  // Check step 2 heuristics.
-  let classListAddPresentSpec =
-    functionSpec(createNewCard)
-      .contains("classList.add")
-      .andThen("card")
-  let classNameEqualsPresentSpec =
-    functionSpec(appendNewCard)
-      .contains("className")
-      .andThen("card");
-  let passedStep2Heuristics =
-    checkFunctionSpec(classListAddPresentSpec) ||
-    checkFunctionSpec(classNameEqualsPresentSpec);
+  let classListAddPresentSpec = functionSpec(createNewCard)
+    .contains("classList.add")
+    .andThen("card")
+  let classNameEqualsPresentSpec = functionSpec(appendNewCard)
+    .contains("className")
+    .andThen("card");
+  let passedStep2Heuristics = checkFunctionSpec(classListAddPresentSpec) || checkFunctionSpec(classNameEqualsPresentSpec);
   let step2Hint = constructHintMessage(2, `Remember you can access and manipulate an element's classes using its classList property. Try Googling JavaScript's classList.add method.`, RESOURCES.classListAdd);
 
-  let usesInnerHtml =
-    functionSpec(createNewCard)
-      .contains(".innerHTML");
-  let passedStep3Heuristics =
-    checkFunctionSpec(usesInnerHtml);
+  let usesInnerHtml = functionSpec(createNewCard)
+    .contains(".innerHTML");
+  let passedStep3Heuristics = checkFunctionSpec(usesInnerHtml);
   let step3Hint = constructHintMessage(3, `You can write the HTML for the two child divs directly in script.js as a template string (using backticks). Try updating your card element's innerHTML with that structure.`, RESOURCES.innerHTML);
 
-  // Run user function.
   let card;
   let exception = callUserCode(() => {
     card = createNewCard();
@@ -102,22 +75,19 @@ function createNewCardTest() {
 
   if (card.tagName.toLowerCase() != "div") {
     console.log(constructErrorMessage(TEST_NAME, 1, `The card should be a div element but we got something else. Remember to use a div!`));
-    console.log("\nHere's what the HTML looks like:\n" +
-      serialize(card) + "\n");
+    console.log("\nHere's what the HTML looks like:\n" + serialize(card) + "\n");
     console.log(step1Hint);
   }
 
   if (!card.classList.contains("card")) {
     console.log(constructErrorMessage(TEST_NAME, 2, `The card div should contain the class 'card'.`));
-    console.log("\nHere's what the HTML looks like:\n" +
-      serialize(card) + "\n");
+    console.log("\nHere's what the HTML looks like:\n" + serialize(card) + "\n");
     console.log(step2Hint);
   }
 
   if (card.children.length !== 2) {
     console.log(constructErrorMessage(TEST_NAME, 3, `You should be adding exactly 2 children to the innerHTML of your card, but we see ${card.children.length}.`));
-    console.log("\nHere's what the HTML looks like:\n" +
-      serialize(card) + "\n");
+    console.log("\nHere's what the HTML looks like:\n" + serialize(card) + "\n");
     console.log(step3Hint);
     return false;
   }
@@ -127,16 +97,14 @@ function createNewCardTest() {
 
   if (!cardDown.classList.contains("card-down")) {
     console.log(constructErrorMessage(TEST_NAME, 3, `The first child of the card should be a div with the class 'card-down'.`));
-    console.log("\nHere's what the HTML looks like:\n" +
-      serialize(card) + "\n");
+    console.log("\nHere's what the HTML looks like:\n" + serialize(card) + "\n");
     console.log(step3Hint);
     return false;
   }
 
   if (!cardUp.classList.contains("card-up")) {
     console.log(constructErrorMessage(TEST_NAME, 3, `The second child of the card should be a div with the class 'card-up'.`));
-    console.log("\nHere's what the HTML looks like:\n" +
-      serialize(card) + "\n");
+    console.log("\nHere's what the HTML looks like:\n" + serialize(card) + "\n");
     console.log(step3Hint);
     return false;
   }
@@ -147,26 +115,19 @@ function createNewCardTest() {
 
 function appendNewCardTest() {
   const TEST_NAME = "appendNewCardTest";
-
-  // Check step 1 heuristics.
-  let variableAndCreateCardPresentSpec =
-    functionSpec(appendNewCard)
-      .contains("let")
-      .or("var")
-      .or("const")
-      .andThen("createNewCard");
-  let passedStep1Heuristics =
-    checkFunctionSpec(variableAndCreateCardPresentSpec);
+  let variableAndCreateCardPresentSpec = functionSpec(appendNewCard)
+    .contains("let")
+    .or("var")
+    .or("const")
+    .andThen("createNewCard");
+  let passedStep1Heuristics = checkFunctionSpec(variableAndCreateCardPresentSpec);
   let step1Hint = constructHintMessage(1, `You should start by calling 'createNewCard' and storing the result in a variable.`, RESOURCES.createElement);
 
-  let usesAppendChild =
-    functionSpec(appendNewCard)
-      .contains(".appendChild");
-  let passedStep2Heuristics =
-    checkFunctionSpec(usesAppendChild);
+  let usesAppendChild = functionSpec(appendNewCard)
+    .contains(".appendChild");
+  let passedStep2Heuristics = checkFunctionSpec(usesAppendChild);
   let step2Hint = constructHintMessage(2, `Try using the appendChild method on the parentElement and pass in your new card element as the argument.`, RESOURCES.appendChild);
 
-  // Run user function.
   let returnValue;
   let parent = document.createElement("div");
   parent.setAttribute("id", "card-container");
@@ -213,43 +174,41 @@ function appendNewCardTest() {
 
 function shuffleCardImageClassesTest() {
   const TEST_NAME = "shuffleCardImageClassesTest";
-
-  // Check step 1 heuristics.
-  let variableDeclarationAndClassesPresentSpec =
-    functionSpec(shuffleCardImageClasses)
-      .contains("let")
-      .or("var")
-      .or("const")
-      .andThen("[")
-      .andThen("image-1")
-      .andThen("image-1")
-      .andThen("image-2")
-      .andThen("image-2")
-      .andThen("image-3")
-      .andThen("image-3")
-      .andThen("image-4")
-      .andThen("image-4")
-      .andThen("image-5")
-      .andThen("image-5")
-      .andThen("image-6")
-      .andThen("image-6")
-      .andThen("]");
-  let passedStep1Heuristics =
-    checkFunctionSpec(variableDeclarationAndClassesPresentSpec);
-  let step1Hint = constructHintMessage(1, `Start by creating an array that contains two of each image class like this: ["image-1", "image-1", "image-2", "image-2", ... , "image-6", "image-6"]. Store it in a variable.`, RESOURCES.arrays);
+  let variableDeclarationAndClassesPresentSpec = functionSpec(shuffleCardImageClasses)
+    .contains("let")
+    .or("var")
+    .or("const")
+    .andThen("[")
+    .andThen("image-1")
+    .andThen("image-1")
+    .andThen("image-2")
+    .andThen("image-2")
+    .andThen("image-3")
+    .andThen("image-3")
+    .andThen("image-4")
+    .andThen("image-4")
+    .andThen("image-5")
+    .andThen("image-5")
+    .andThen("image-6")
+    .andThen("image-6")
+    .andThen("image-7")
+    .andThen("image-7")
+    .andThen("image-8")
+    .andThen("image-8")
+    .andThen("image-9")
+    .andThen("image-9")
+    .andThen("]");
+  let passedStep1Heuristics = checkFunctionSpec(variableDeclarationAndClassesPresentSpec);
+  let step1Hint = constructHintMessage(1, `Start by creating an array that contains two of each image class like this: ["image-1", "image-1", "image-2", "image-2", ... , "image-9", "image-9"]. Store it in a variable.`, RESOURCES.arrays);
 
   let step2HintLoadUnderscore = constructHintMessage(2, `The underscore.js CDN link must be included in your index.html above all other scripts, like this: ${COLOR_CODE.cyan}<script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>${COLOR_CODE.reset}`)
 
-  // Check step 3 heuristics.
-  let underScoreAndShuffleUsed =
-    functionSpec(shuffleCardImageClasses)
-      .contains("_")
-      .andThen(".shuffle");
-  let passedStep3Heuristics =
-    checkFunctionSpec(underScoreAndShuffleUsed);
+  let underScoreAndShuffleUsed = functionSpec(shuffleCardImageClasses)
+    .contains("_")
+    .andThen(".shuffle");
+  let passedStep3Heuristics = checkFunctionSpec(underScoreAndShuffleUsed);
   let step3Hint = constructHintMessage(3, `We did not find use of the _.shuffle method. Your return needs to call the _.shuffle method and pass in your array of image classes as an argument.`, RESOURCES.underscore);
 
-  // Check for underscore availability and exceptions.
   let exception = callUserCode(() => {
     shuffleCardImageClasses();
   });
@@ -286,7 +245,6 @@ function shuffleCardImageClassesTest() {
     return false;
   }
 
-  // Check for objects.
   if (typeof imageArray1 != "object" ||
     typeof imageArray2 != "object" ||
     typeof imageArray3 != "object" ||
@@ -305,35 +263,33 @@ function shuffleCardImageClassesTest() {
     return false;
   }
 
-  let allStrings = imageArray1.every(
-    el => (typeof el === "string"));
+  let allStrings = imageArray1.every(el => (typeof el === "string"));
   if (!allStrings) {
     console.error(constructErrorMessage(TEST_NAME, 1, 'Your function should return an array of all strings but array elements were not all strings.'));
     console.log(constructHintMessage(3, "Remember to wrap your strings inside double or single quotes."));
     return false;
   }
 
-  let allGoodClassNames = imageArray1.every(
-    el => {
-      return el.startsWith('image-') &&
-        el.length == 7 &&
-        (el[6] >= 1 && el[6] <= 6);
-    });
+  let allGoodClassNames = imageArray1.every(el => {
+    return el.startsWith('image-') &&
+      el.length == 7 &&
+      (el[6] >= 1 && el[6] <= 9);
+  });
   if (!allGoodClassNames) {
-    console.log(constructErrorMessage(TEST_NAME, 1, "It looks like one or more of the string elements in your array have been misnamed. Please stick to 2 sets of 'image-1' through 'image-6', in string format."));
+    console.log(constructErrorMessage(TEST_NAME, 1, "It looks like one or more of the string elements in your array have been misnamed. Please stick to 2 sets of 'image-1' through 'image-9', in string format."));
     return false;
   }
 
   countHash = {};
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 9; i++) {
     countHash[String(i)] = 0;
   }
   imageArray1.forEach(el => {
     countHash[el[6]]++;
   });
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 9; i++) {
     if (countHash[String(i)] != 2) {
-      console.log(constructErrorMessage(TEST_NAME, 1, "You need to have exactly 2 of each image class (image-1 to image-6) in your array.  It looks like that's not the case."));
+      console.log(constructErrorMessage(TEST_NAME, 1, "You need to have exactly 2 of each image class (image-1 to image-9) in your array.  It looks like that's not the case."));
       return false;
     }
   }
@@ -359,56 +315,40 @@ function shuffleCardImageClassesTest() {
 
 function createCardsTest() {
   const TEST_NAME = "createCardsTest";
-
-  // Check step 1 heuristics.
-  let variableAndEmptyArrayPresentSpec =
-    functionSpec(createCards)
-      .contains("let")
-      .or("var")
-      .or("const")
-      .andThen("[]");
-  let passedStep1Heuristics =
-    checkFunctionSpec(variableAndEmptyArrayPresentSpec);
+  let variableAndEmptyArrayPresentSpec = functionSpec(createCards)
+    .contains("let")
+    .or("var")
+    .or("const")
+    .andThen("[]");
+  let passedStep1Heuristics = checkFunctionSpec(variableAndEmptyArrayPresentSpec);
   let step1Hint = constructHintMessage(1, `Start by creating a variable that holds an empty array: [].`, RESOURCES.arrays);
 
-  // Check step 2 heuristics.
-  let forLoopPresentSpec =
-    functionSpec(createCards)
-      .contains("for")
-      .andThen("12")
-      .andThen("++");
-  let passedStep2Heuristics =
-    checkFunctionSpec(forLoopPresentSpec);
-  let step2Hint = constructHintMessage(2, `Make sure you have a for loop that iterates 12 times.`, RESOURCES.forLoops);
+  let forLoopPresentSpec = functionSpec(createCards)
+    .contains("for")
+    .andThen("18")
+    .andThen("++");
+  let passedStep2Heuristics = checkFunctionSpec(forLoopPresentSpec);
+  let step2Hint = constructHintMessage(2, `Make sure you have a for loop that iterates 18 times.`, RESOURCES.forLoops);
 
-  // Check step 2a heuristics.
-  let variableappendNewCardPresentSpec =
-    functionSpec(createCards)
-      .contains("let")
-      .or("var")
-      .or("const")
-      .andThen("appendNewCard");
-  let passedStep2aHeuristics =
-    checkFunctionSpec(variableappendNewCardPresentSpec);
+  let variableappendNewCardPresentSpec = functionSpec(createCards)
+    .contains("let")
+    .or("var")
+    .or("const")
+    .andThen("appendNewCard");
+  let passedStep2aHeuristics = checkFunctionSpec(variableappendNewCardPresentSpec);
   let step2aHint = constructHintMessage("2a", `Try calling appendNewCard with parentElement as an argument, then store the result in a variable.`);
 
-  // Check step 2b heuristics.
-  let classListAddPresentSpec =
-    functionSpec(createCards)
-      .contains("classList.add")
-      .andThen("shuffledImageClasses");
-  let passedStep2bHeuristics =
-    checkFunctionSpec(classListAddPresentSpec);
+  let classListAddPresentSpec = functionSpec(createCards)
+    .contains("classList.add")
+    .andThen("shuffledImageClasses");
+  let passedStep2bHeuristics = checkFunctionSpec(classListAddPresentSpec);
   let step2bHint = constructHintMessage("2b", `Try calling classList.add on your new card from step 2a.`, RESOURCES.classListAdd);
 
-  // Check step 2c index heuristics.
-  let cardObjectspec =
-    functionSpec(createCards)
-      .contains("index")
-      .andThen("element")
-      .andThen("imageClass")
-  let passedStep2cHeuristics =
-    checkFunctionSpec(cardObjectspec);
+  let cardObjectspec = functionSpec(createCards)
+    .contains("index")
+    .andThen("element")
+    .andThen("imageClass")
+  let passedStep2cHeuristics = checkFunctionSpec(cardObjectspec);
   let step2cHint = constructHintMessage("2c", `Make sure your object has 3 "key-value" pairs. Something like:
      {
        index: i, <-- the current loop iteration
@@ -423,13 +363,16 @@ function createCardsTest() {
     "image-4", "image-4",
     "image-5", "image-5",
     "image-6", "image-6",
+    "image-7", "image-7",
+    "image-8", "image-8",
+    "image-9", "image-9",
   ];
   let parent = document.createElement("div");
   let exception = callUserCode(() => {
     return cards = createCards(parent, imageClasses);
   });
 
-  if (parent.children.length != 12) {
+  if (parent.children.length != 18) {
     if (!passedStep1Heuristics) {
       console.log(constructLateErrorMessage(TEST_NAME, 4));
       console.log(step1Hint);
@@ -448,7 +391,7 @@ function createCardsTest() {
       console.log(constructLateErrorMessage(TEST_NAME, 4));
       console.log(step2cHint);
     } else {
-      console.error(constructErrorMessage(`Should create 12 card objects as children but got ${parent.children.length}. Make sure you are adding the right number of cards to the card-grid-container!`));
+      console.error(constructErrorMessage(`Should create 18 card objects as children but got ${parent.children.length}. Make sure you are adding the right number of cards to the card-grid-container!`));
     }
     return false;
   }
@@ -469,17 +412,17 @@ function createCardsTest() {
   if (typeof (cards) !== "object" || cards.length == "undefined") {
     console.error(constructErrorMessage(TEST_NAME, 3, `Should return an array of objects but returned ${typeof (cards)}.`));
 
-    console.log(constructHintMessage(3, `Remember to return the array of card objects you just made! This function should return an array of 12 card objects but that's not what we got.`));
+    console.log(constructHintMessage(3, `Remember to return the array of card objects you just made! This function should return an array of 18 card objects but that's not what we got.`));
     return false;
 
   }
 
-  if (cards.length !== 12) {
+  if (cards.length !== 18) {
     if (!passedStep2cHeuristics) {
       console.log(constructLateErrorMessage(TEST_NAME, 4));
       console.log(step2cHint);
     } else {
-      console.error(`${ERROR} should return 12 card objects as children but got ${parent.children.length}. Make sure you are pushing all 12 cards into your array!`);
+      console.error(`${ERROR} should return 18 card objects as children but got ${parent.children.length}. Make sure you are pushing all 18 cards into your array!`);
     }
     return false;
   }
@@ -543,37 +486,30 @@ function doCardsMatchTest() {
 function incrementCounterTest() {
   const TEST_NAME = "incrementCounterTest";
 
-  let counterNameAtZero =
-    functionSpec(incrementCounter)
-      .contains("if")
-      .andThen("counters")
-      .andThen("undefined");
-  let passedStep1Heuristics =
-    checkFunctionSpec(counterNameAtZero);
+  let counterNameAtZero = functionSpec(incrementCounter)
+    .contains("if")
+    .andThen("counters")
+    .andThen("undefined");
+  let passedStep1Heuristics = checkFunctionSpec(counterNameAtZero);
 
   let step1Hint = constructHintMessage(1, `Try writing an if statement that compares counters[counterName] and undefined`, RESOURCES._undefined);
 
-  let counterNameIncrement =
-    functionSpec(incrementCounter)
-      .contains("counters[counterName]++;")
-      .or("counters[counterName] += 1")
-      .or("counters[counterName] = counters[counterName] + 1")
-  let passedStep2Heuristics =
-    checkFunctionSpec(counterNameIncrement);
+  let counterNameIncrement = functionSpec(incrementCounter)
+    .contains("counters[counterName]++;")
+    .or("counters[counterName] += 1")
+    .or("counters[counterName] = counters[counterName] + 1")
+  let passedStep2Heuristics = checkFunctionSpec(counterNameIncrement);
 
   let step2Hint = constructHintMessage(2, `Make sure to add 1 to counters[counterName]. You can do this easily with the ++ (increment) operator.`, RESOURCES.increment);
 
-  let innerHtmlSet =
-    functionSpec(incrementCounter)
-      .contains(".innerHTML")
-      .andThen("counters")
-      .andThen("[counterName]")
-  let passedStep3Heuristics =
-    checkFunctionSpec(innerHtmlSet);
+  let innerHtmlSet = functionSpec(incrementCounter)
+    .contains(".innerHTML")
+    .andThen("counters")
+    .andThen("[counterName]")
+  let passedStep3Heuristics = checkFunctionSpec(innerHtmlSet);
 
   let step3Hint = constructHintMessage(3, `Try setting the innerHTML of parentElement with the new counter value.`, RESOURCES.innerHTML);
 
-  // Clear global counters.
   try {
     counters = {};
   } catch (err) { }
