@@ -23,13 +23,15 @@ function appendNewCard(parentElement) {
 }
 
 function shuffleCardImageClasses() {
-  const cardClasses = [
-    "image-1", "image-1", "image-2", "image-2", "image-3", "image-3",
-    "image-4", "image-4", "image-5", "image-5", "image-6", "image-6",
-    "image-7", "image-7", "image-8", "image-8", "image-9", "image-9",
-    "image-10", "image-10", "image-11", "image-11", "image-12", "image-12"
-  ];
-  return _.shuffle(cardClasses).slice(0, getCardCount());
+  let cardClasses;
+  if (gameMode === 'easy') {
+    cardClasses = ["image-1", "image-1", "image-2", "image-2", "image-3", "image-3", "image-4", "image-4", "image-5", "image-5", "image-6", "image-6"];
+  } else if (gameMode === 'hard') {
+    cardClasses = ["image-1", "image-1", "image-2", "image-2", "image-3", "image-3", "image-4", "image-4", "image-5", "image-5", "image-6", "image-6", "image-7", "image-7", "image-8", "image-8", "image-9", "image-9", "image-10", "image-10", "image-11", "image-11", "image-12", "image-12"];
+  } else {
+    cardClasses = ["image-1", "image-1", "image-2", "image-2", "image-3", "image-3", "image-4", "image-4", "image-5", "image-5", "image-6", "image-6", "image-7", "image-7", "image-8", "image-8", "image-9", "image-9"];
+  }
+  return _.shuffle(cardClasses);
 }
 
 function getCardCount() {
