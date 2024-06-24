@@ -1,8 +1,0 @@
-/* fallback */
-@font-face {
-  font-family: 'Playwrite PL';
-  font-style: normal;
-  font-weight: 100 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/playwritepl/v3/0QInMXVf_4C2VH-yUr5uz72O9pbU8AI.woff2) format('woff2');
-}
